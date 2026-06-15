@@ -1,36 +1,86 @@
-const taskInput= document.getElementById("task-input");
-const addBtn= document.getElementById("add-btn");
-const sectionBord= document.querySelector(".board");
-const divColumns= document.querySelector(".column");
-const todoColumn= document.getElementById("todo-column");
+const taskInput = document.getElementById("task-input");
+const addBtn = document.getElementById("add-btn");
+const todoColumn = document.getElementById("todo-column");
+const doingColumn = document.getElementById("doing-column");
+const doneColumn = document.getElementById("done-column");
 
-const tasks= [];
-
-function addTask(){
-
-    if(taskInput.value.trim() === ""){
-        alert("Digite uma atividade");
-        return;
-    }
-    
-    const newTask= {
-        id: Date.now(),
-        nome:taskInput.value,
-        status:"todo"
-    }
+const tasks = [];
 
 
-    tasks.push(newTask);
+const COLUMNS = {
+  todo:  { el: () => todoColumn,  prev: null,    next: "doing" },
+  doing: { el: () => doingColumn, prev: "todo",  next: "done"  },
+  done:  { el: () => doneColumn,  prev: "doing", next: null    },
+};
 
-    const paragraph= document.createElement("p");
+function createCard(task) {
+  const card = document.createElement("div");
+  card.classList.add("card");
+  card.dataset.id = task.id;
 
-    paragraph.append(newTask.nome)
+  const text = document.createElement("p");
+  text.textContent = task.nome;
 
-   todoColumn.append(paragraph);
-   
+  const btnArea = document.createElement("div");
+  btnArea.classList.add("card-btns");
+
+  const btnPrev = document.createElement("button");
+  btnPrev.textContent = "← Voltar";
+  btnPrev.addEventListener("click", () => moveTask(task.id, "prev"));
+
+  const btnNext = document.createElement("button");
+  btnNext.textContent = "Avançar →";
+  btnNext.addEventListener("click", () => moveTask(task.id, "next"));
+
+  btnArea.append(btnPrev, btnNext);
+  card.append(text, btnArea);
+
+  return card;
 }
 
-addBtn.addEventListener("click", ()=>{
-    addTask();
-    taskInput.value= "";
-})
+function moveTask(id, direction) {
+  
+  const task = tasks.find(t => t.id === id);
+  if (!task) return;
+
+  const config = COLUMNS[task.status];
+  const newStatus = config[direction]; 
+
+  if (!newStatus) return;
+
+  task.status = newStatus;
+
+  const card = document.querySelector(`.card[data-id="${id}"]`);
+  COLUMNS[newStatus].el().append(card);
+
+  updateCardBtns(card, task.status);
+}
+
+function updateCardBtns(card, status) {
+  const [btnPrev, btnNext] = card.querySelectorAll("button");
+  btnPrev.style.visibility = COLUMNS[status].prev ? "visible" : "hidden";
+  btnNext.style.visibility = COLUMNS[status].next ? "visible" : "hidden";
+}
+
+function addTask() {
+  if (taskInput.value.trim() === "") {
+    alert("Digite uma atividade");
+    return;
+  }
+
+  const newTask = {
+    id: Date.now(),
+    nome: taskInput.value,
+    status: "todo"
+  };
+
+  tasks.push(newTask);
+
+  const card = createCard(newTask);
+  updateCardBtns(card, "todo");  
+  todoColumn.append(card);
+
+  taskInput.value = "";
+}
+
+addBtn.addEventListener("click", () => addTask());

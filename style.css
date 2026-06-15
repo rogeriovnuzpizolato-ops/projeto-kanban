@@ -65,6 +65,10 @@ header h1 {
   margin-bottom: 15px;
 }
 
+.column p {
+  color: white;
+}
+
 .task-container {
   min-height: 500px;
   display: flex;
