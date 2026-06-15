@@ -7,18 +7,30 @@ const todoColumn= document.getElementById("todo-column");
 const tasks= [];
 
 function addTask(){
+
+    if(taskInput.value.trim() === ""){
+        alert("Digite uma atividade");
+        return;
+    }
     
     const newTask= {
         id: Date.now(),
         nome:taskInput.value,
         status:"todo"
     }
+
+
     tasks.push(newTask);
 
-   todoColumn.append(newTask.nome);
-   console.log(tasks);
+    const paragraph= document.createElement("p");
+
+    paragraph.append(newTask.nome)
+
+   todoColumn.append(paragraph);
+   
 }
 
 addBtn.addEventListener("click", ()=>{
     addTask();
+    taskInput.value= "";
 })
