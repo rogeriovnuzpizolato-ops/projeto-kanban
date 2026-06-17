@@ -1,0 +1,129 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #1f2937;
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  padding: 30px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+header {
+  margin-bottom: 30px;
+}
+
+header h1 {
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.add-task {
+  display: flex;
+  gap: 10px;
+}
+
+.add-task input {
+  text-align: center;
+  font-size: 18px;
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+}
+
+.add-task button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.column {
+  background: #374151;
+  border-radius: 12px;
+  padding: 15px;
+}
+
+.column h2 {
+  color: white;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.column p {
+  color: white;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.404);
+  border-radius: 20px;
+  font-size: 20px;
+}
+
+.card-btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.card-btns button{
+  text-align: center;
+  padding: 5px;
+  border-radius: 10px;
+  border: none;
+}
+
+.task-container {
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.task-card {
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.task-card p {
+  margin-bottom: 10px;
+  word-break: break-word;
+}
+
+.task-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.task-actions button {
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
