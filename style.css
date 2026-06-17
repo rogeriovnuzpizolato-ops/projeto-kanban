@@ -31,6 +31,8 @@ header h1 {
 }
 
 .add-task input {
+  text-align: center;
+  font-size: 18px;
   flex: 1;
   padding: 12px;
   border: none;
@@ -62,6 +64,36 @@ header h1 {
   color: white;
   text-align: center;
   margin-bottom: 15px;
+}
+
+.column p {
+  color: white;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.404);
+  border-radius: 20px;
+  font-size: 20px;
+}
+
+.card-btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.card-btns button{
+  text-align: center;
+  padding: 5px;
+  border-radius: 10px;
+  border: none;
 }
 
 .task-container {
