@@ -4,14 +4,26 @@ const todoColumn = document.getElementById("todo-column");
 const doingColumn = document.getElementById("doing-column");
 const doneColumn = document.getElementById("done-column");
 
-const tasks = [];
+const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
+function saveTasks(){
+  localStorage.setItem("tasks", JSON.stringify(tasks))
+}
 
 const COLUMNS = {
   todo:  { el: () => todoColumn,  prev: null,    next: "doing" },
   doing: { el: () => doingColumn, prev: "todo",  next: "done"  },
   done:  { el: () => doneColumn,  prev: "doing", next: null    },
 };
+
+function loadTasks (){
+  localStorage.setItem("tasks", JSON.stringify(tasks))
+
+  tasks.forEach(task => {
+    const card = createCard(task);
+    COLUMNS[task.status].el().append(card);
+  });
+}
 
 function createCard(task) {
   const card = document.createElement("div");
@@ -54,12 +66,15 @@ function moveTask(id, direction) {
   COLUMNS[newStatus].el().append(card);
 
   updateCardBtns(card, task.status);
+
+  saveTasks()
 }
 
 function updateCardBtns(card, status) {
   const [btnPrev, btnNext] = card.querySelectorAll("button");
   btnPrev.style.visibility = COLUMNS[status].prev ? "visible" : "hidden";
   btnNext.style.visibility = COLUMNS[status].next ? "visible" : "hidden";
+
 }
 
 function addTask() {
@@ -81,6 +96,10 @@ function addTask() {
   todoColumn.append(card);
 
   taskInput.value = "";
+
+  saveTasks()
 }
 
 addBtn.addEventListener("click", () => addTask());
+
+loadTasks()
